@@ -59,6 +59,7 @@ HTML5, CSS3 y JavaScript vanilla con módulos ES, sin frameworks ni build. Se pu
 ├── sw.js                    funcionamiento sin conexión
 ├── manifest.webmanifest     instalación en el celular
 ├── img/  fonts/             íconos y tipografía autoalojada
+├── docs/                    Lighthouse y capturas (no se publica en el sitio)
 └── .github/workflows/       deploy a GitHub Pages
 ```
 

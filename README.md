@@ -6,6 +6,11 @@ Web app para anotar, día por día, las viandas que se entregan a la tripulació
 |---|---|
 | **App publicada** | https://nahux-controlz.github.io/viandas/ |
 | **Repositorio** | https://github.com/nahux-controlz/viandas |
+| **Lighthouse (mobile)** | [Captura](docs/lighthouse-mobile.png) · [Reporte](docs/lighthouse-mobile.html) |
+
+| Inicio | Un día | Lista |
+|---|---|---|
+| <img src="docs/capturas/mobile-inicio.webp" width="220" alt="Pantalla de inicio: nombre del barco y fecha de entrada"> | <img src="docs/capturas/mobile-dia.webp" width="220" alt="Día 1 con almuerzo y cena en Apartamento y Puerto, horas y menú"> | <img src="docs/capturas/mobile-lista.webp" width="220" alt="Lista de lo trabajado con el total, la tabla por día y los menús"> |
 
 ## Para quién es
 
@@ -63,9 +68,10 @@ Cada pantalla es un módulo con `html()`, `titulo()` y `montar()`. Al cambiar de
 
 | Requisito | Resultado | Cómo se comprobó |
 |---|---|---|
+| Lighthouse mobile ≥ 90 | 100 en Performance, Accessibility, Best Practices y SEO | Lighthouse sobre la URL pública |
 | WCAG 2.2 AA | Sin violaciones | axe-core en las 6 pantallas del flujo, en 375, 768 y 1280 px |
 | Responsive sin scroll horizontal | 375, 768 y 1280 px, la tabla también entra en 375 | Script con Chrome headless y revisión de capturas |
-| Flujo completo | Cargar barco, días, horas y menú, recargar, ver lista, volver atrás y terminar | Script con Chrome headless |
+| Flujo completo | Cargar barco, días, horas y menú, recargar, ver lista, volver atrás y terminar | Script con Chrome headless, en local y en la URL pública |
 | Sin conexión | La app abre sin red después de la primera visita | Chrome headless en modo offline |
 | Movimiento reducido | Transiciones desactivadas con `prefers-reduced-motion` | Revisión del CSS |
 

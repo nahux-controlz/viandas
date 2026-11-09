@@ -56,3 +56,8 @@ window.addEventListener('popstate', (e) => {
 const [nombre, opciones] = mostrar(ctx.datos.actual ? 'trabajo' : 'inicio');
 history.replaceState({ nombre, opciones }, '');
 pedirGuardadoPersistente();
+
+// Guarda la app en el teléfono para que abra aunque no haya señal (por ejemplo, en el puerto).
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}

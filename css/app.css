@@ -169,6 +169,8 @@ input:focus-visible, textarea:focus-visible { outline: 3px solid var(--mar); out
 .btn--principal:hover { background: var(--mar-oscuro); }
 .btn--secundario { background: var(--papel); color: var(--mar); border-color: var(--mar); }
 .btn--secundario:hover { background: var(--mar-claro); }
+.btn--whatsapp { background: var(--wsp); color: #fff; }
+.btn--whatsapp:hover { background: #0a5229; }
 
 .btn-texto {
   justify-self: start;
@@ -358,6 +360,17 @@ input:focus-visible, textarea:focus-visible { outline: 3px solid var(--mar); out
 @media (min-width: 40rem) {
   .acciones { grid-auto-flow: column; justify-content: start; }
   .btn { width: auto; }
+}
+
+/* ---------- Impresión: solo la lista ---------- */
+@media print {
+  .salto, .cabecera, .pie, .no-imprimir { display: none !important; }
+  body { font-size: 12pt; background: #fff; }
+  main { padding: 0; }
+  .tarjeta { padding: 0; border: 0; box-shadow: none; }
+  .tabla { overflow: visible; border: 0; }
+  .tabla tr { break-inside: avoid; }
+  .tabla__almuerzo, .tabla__cena, .tabla__total { background: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

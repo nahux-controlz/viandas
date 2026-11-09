@@ -3,6 +3,7 @@ import { escapar, viandas } from '../html.js';
 import { fechaLarga, fechaCorta } from '../fechas.js';
 import { COMIDAS, LUGARES, totalDia, totalTrabajo } from '../datos.js';
 import { ICONOS } from '../iconos.js';
+import { enlaceWhatsApp } from '../compartir.js';
 
 export const titulo = (ctx, opciones) => `Lista del barco ${buscar(ctx, opciones)?.barco ?? ''}`;
 
@@ -88,6 +89,8 @@ export function html(ctx, opciones = {}) {
     </section>
 
     <div class="acciones no-imprimir">
+      <a class="btn btn--whatsapp" href="${enlaceWhatsApp(t)}" target="_blank" rel="noopener noreferrer">${ICONOS.whatsapp}Enviar por WhatsApp<span class="sr-only"> (abre WhatsApp)</span></a>
+      <button type="button" class="btn btn--secundario" data-accion="imprimir">${ICONOS.imprimir}Imprimir o guardar en PDF</button>
       ${opciones.id ? '' : `<button type="button" class="btn btn--secundario" data-accion="volver">${ICONOS.volver}Volver a anotar días</button>`}
     </div>`;
 }
@@ -96,5 +99,6 @@ export function montar(raiz, ctx) {
   raiz.addEventListener('click', (e) => {
     const boton = e.target.closest('[data-accion]');
     if (boton?.dataset.accion === 'volver') ctx.ir('trabajo');
+    if (boton?.dataset.accion === 'imprimir') window.print();
   });
 }

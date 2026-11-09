@@ -4,18 +4,19 @@
 //   actual: { id, barco, entrada: "AAAA-MM-DD", dias: [Dia] } | null,
 //   anteriores: [ { ...trabajo, terminado: "AAAA-MM-DD" } ]
 // }
-// Dia = { almuerzo: { apto: { cant }, puerto: { cant } }, cena: {...}, menu: "" }
+// Dia = { almuerzo: { apto: { cant, hora: "HH:MM" }, puerto: {...} }, cena: {...}, menu: "" }
 
 const CLAVE = 'viandas:v1';
 
 export const COMIDAS = [['almuerzo', 'Almuerzo'], ['cena', 'Cena']];
 export const LUGARES = [['apto', 'Apartamento'], ['puerto', 'Puerto']];
 
-export function nuevoDia() {
+/** Día vacío. Si se pasa el día anterior, copia sus horas de entrega (suelen repetirse). */
+export function nuevoDia(anterior) {
   const dia = { menu: '' };
   for (const [c] of COMIDAS) {
     dia[c] = {};
-    for (const [l] of LUGARES) dia[c][l] = { cant: 0 };
+    for (const [l] of LUGARES) dia[c][l] = { cant: 0, hora: anterior?.[c]?.[l]?.hora ?? '' };
   }
   return dia;
 }
@@ -58,6 +59,7 @@ function normalizarDia(d = {}) {
     for (const [l] of LUGARES) {
       const v = d[c]?.[l] ?? {};
       dia[c][l].cant = Number.isFinite(v.cant) && v.cant > 0 ? Math.floor(v.cant) : 0;
+      dia[c][l].hora = /^\d{2}:\d{2}$/.test(v.hora) ? v.hora : '';
     }
   }
   return dia;

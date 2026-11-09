@@ -73,6 +73,8 @@ function campoLugar(d, c, comida, l, lugar) {
         <button type="button" class="contador__btn contador__btn--menos" data-accion="menos" data-c="${c}" data-l="${l}" aria-label="Una menos ${de}">−</button>
         <button type="button" class="contador__btn contador__btn--mas" data-accion="mas" data-c="${c}" data-l="${l}" aria-label="Una más ${de}">+</button>
       </div>
+      <label class="lugar__etiqueta" for="${id}-hora">Hora de entrega<span class="sr-only"> ${de}</span></label>
+      <input id="${id}-hora" class="hora" type="time" data-campo="hora" data-c="${c}" data-l="${l}" value="${d[c][l].hora}">
     </div>`;
 }
 
@@ -104,7 +106,7 @@ export function montar(raiz, ctx, { abierto } = {}) {
     } else if (accion === 'abrir') {
       ctx.ir('trabajo', { abierto: Number(boton.dataset.dia), foco: 'dia-titulo' });
     } else if (accion === 'agregar') {
-      t.dias.push(nuevoDia());
+      t.dias.push(nuevoDia(t.dias.at(-1)));
       ctx.guardar();
       ctx.ir('trabajo', { foco: 'dia-titulo' });
     } else if (accion === 'borrar-dia') {
@@ -126,6 +128,8 @@ export function montar(raiz, ctx, { abierto } = {}) {
       const limpio = campo.value.replace(/\D/g, '').slice(0, 3);
       if (limpio !== campo.value) campo.value = limpio;
       dia[campo.dataset.c][campo.dataset.l].cant = Number(limpio) || 0;
+    } else if (campo.dataset.campo === 'hora') {
+      dia[campo.dataset.c][campo.dataset.l].hora = campo.value;
     } else {
       return;
     }

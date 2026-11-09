@@ -295,6 +295,7 @@ input:focus-visible, textarea:focus-visible { outline: 3px solid var(--mar); out
   cursor: pointer;
   touch-action: manipulation;
 }
+.hora { min-width: 0; padding: 0.5rem; font-size: 1.125rem; }
 .contador__btn--menos { grid-area: menos; }
 .contador__btn--mas { grid-area: mas; }
 .contador__btn:active { color: #fff; background: var(--mar); }

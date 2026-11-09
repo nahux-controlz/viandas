@@ -1,6 +1,6 @@
 // Lista de lo trabajado: totales del barco, detalle por día y menús.
 import { escapar, viandas } from '../html.js';
-import { fechaLarga, fechaCorta } from '../fechas.js';
+import { fechaLarga, fechaCorta, hoyISO } from '../fechas.js';
 import { COMIDAS, LUGARES, totalDia, totalTrabajo } from '../datos.js';
 import { ICONOS } from '../iconos.js';
 import { enlaceWhatsApp } from '../compartir.js';
@@ -91,14 +91,37 @@ export function html(ctx, opciones = {}) {
     <div class="acciones no-imprimir">
       <a class="btn btn--whatsapp" href="${enlaceWhatsApp(t)}" target="_blank" rel="noopener noreferrer">${ICONOS.whatsapp}Enviar por WhatsApp<span class="sr-only"> (abre WhatsApp)</span></a>
       <button type="button" class="btn btn--secundario" data-accion="imprimir">${ICONOS.imprimir}Imprimir o guardar en PDF</button>
-      ${opciones.id ? '' : `<button type="button" class="btn btn--secundario" data-accion="volver">${ICONOS.volver}Volver a anotar días</button>`}
-    </div>`;
+      ${opciones.id
+        ? `<button type="button" class="btn btn--secundario" data-accion="inicio">${ICONOS.volver}Volver al inicio</button>`
+        : `<button type="button" class="btn btn--secundario" data-accion="volver">${ICONOS.volver}Volver a anotar días</button>`}
+    </div>
+    ${opciones.id
+      ? '<button type="button" class="btn-texto btn-texto--peligro no-imprimir" data-accion="borrar">Borrar esta lista</button>'
+      : `<section class="cierre tarjeta no-imprimir" aria-labelledby="cierre-titulo">
+          <h2 id="cierre-titulo">¿Terminaste con este barco?</h2>
+          <p>La lista queda guardada en <strong>Trabajos anteriores</strong> y podés empezar otro barco.</p>
+          <button type="button" class="btn btn--principal" data-accion="terminar">Terminar con el barco ${escapar(t.barco)}</button>
+        </section>`}`;
 }
 
-export function montar(raiz, ctx) {
+export function montar(raiz, ctx, opciones = {}) {
+  const t = buscar(ctx, opciones);
   raiz.addEventListener('click', (e) => {
-    const boton = e.target.closest('[data-accion]');
-    if (boton?.dataset.accion === 'volver') ctx.ir('trabajo');
-    if (boton?.dataset.accion === 'imprimir') window.print();
+    const accion = e.target.closest('[data-accion]')?.dataset.accion;
+    if (accion === 'volver') ctx.ir('trabajo');
+    else if (accion === 'inicio') ctx.ir('inicio');
+    else if (accion === 'imprimir') window.print();
+    else if (accion === 'terminar') {
+      if (!window.confirm(`¿Terminar con el barco ${t.barco}? Ya no vas a poder agregar días, pero la lista queda guardada.`)) return;
+      ctx.datos.anteriores.unshift({ ...t, terminado: hoyISO() });
+      ctx.datos.actual = null;
+      ctx.guardar();
+      ctx.ir('inicio');
+    } else if (accion === 'borrar') {
+      if (!window.confirm(`¿Borrar la lista del barco ${t.barco}? No se puede recuperar.`)) return;
+      ctx.datos.anteriores = ctx.datos.anteriores.filter((x) => x.id !== t.id);
+      ctx.guardar();
+      ctx.ir('inicio');
+    }
   });
 }

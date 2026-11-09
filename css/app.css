@@ -313,6 +313,9 @@ input:focus-visible, textarea:focus-visible { outline: 3px solid var(--mar); out
 .dia__guardado svg { width: 1.25rem; height: 1.25rem; flex: none; }
 .dia__guardado--error { color: var(--peligro); font-weight: 700; }
 
+.anteriores { display: grid; gap: 0.75rem; }
+.fila .fila__dato { grid-column: 1 / -1; font-size: 1rem; }
+
 /* ---------- Lista de lo trabajado ---------- */
 .resumen { display: grid; gap: 1.25rem; }
 .resumen__cabecera { display: grid; gap: 0.25rem; }
@@ -326,13 +329,14 @@ input:focus-visible, textarea:focus-visible { outline: 3px solid var(--mar); out
 .totales__detalle dt { font-size: 1rem; color: var(--tinta-suave); }
 .totales__detalle dd { margin: 0; font-size: 1.25rem; font-weight: 700; }
 
+.resumen { padding: 1rem 0.75rem; }
 .tabla { overflow-x: auto; border: 1px solid var(--linea); border-radius: var(--radio-chico); }
-.tabla table { width: 100%; border-collapse: collapse; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
-.tabla th, .tabla td { padding: 0.5rem 0.375rem; text-align: center; vertical-align: top; border-bottom: 1px solid var(--linea); }
-.tabla thead th { font-size: 1rem; }
+.tabla table { width: 100%; border-collapse: collapse; font-size: 1rem; font-variant-numeric: tabular-nums; }
+.tabla th, .tabla td { padding: 0.375rem 0.1875rem; text-align: center; vertical-align: top; border-bottom: 1px solid var(--linea); }
+.tabla thead th { font-size: 0.875rem; }
 .tabla abbr { text-decoration: none; }
-.tabla tbody th { text-align: left; }
-.tabla small { display: block; font-size: 0.875rem; font-weight: 400; color: var(--tinta-suave); white-space: nowrap; }
+.tabla tbody th { padding-left: 0.375rem; text-align: left; }
+.tabla small { display: block; font-size: 0.8125rem; font-weight: 400; color: var(--tinta-suave); white-space: nowrap; }
 .tabla tfoot th, .tabla tfoot td { font-weight: 700; border-top: 2px solid var(--tinta); border-bottom: 0; }
 .tabla__almuerzo { color: var(--almuerzo); background: var(--almuerzo-fondo); }
 .tabla__cena { color: var(--cena); background: var(--cena-fondo); }
@@ -342,8 +346,16 @@ input:focus-visible, textarea:focus-visible { outline: 3px solid var(--mar); out
 .menus li { padding-bottom: 0.75rem; border-bottom: 1px solid var(--linea); }
 .menus p { white-space: pre-line; overflow-wrap: anywhere; }
 
+.cierre { display: grid; gap: 0.75rem; border-left: 6px solid var(--ok); }
+.cierre h2 { font-size: 1.375rem; }
+
 @media (min-width: 30rem) {
   .totales__detalle { grid-template-columns: repeat(4, 1fr); }
+  .resumen { padding: 1.25rem; }
+  .tabla table { font-size: 1.0625rem; }
+  .tabla th, .tabla td { padding: 0.5rem 0.375rem; }
+  .tabla thead th { font-size: 1rem; }
+  .tabla small { font-size: 0.875rem; }
 }
 
 @media (min-width: 30rem) {

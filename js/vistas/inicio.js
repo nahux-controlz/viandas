@@ -1,7 +1,7 @@
 // Inicio: nombre del barco y fecha de entrada. También sirve para corregirlos.
-import { escapar } from '../html.js';
-import { hoyISO, esFechaValida } from '../fechas.js';
-import { nuevoTrabajo } from '../datos.js';
+import { escapar, viandas } from '../html.js';
+import { hoyISO, esFechaValida, fechaCorta } from '../fechas.js';
+import { nuevoTrabajo, totalTrabajo } from '../datos.js';
 
 export const titulo = (ctx, { editar } = {}) => (editar ? 'Cambiar barco o fecha' : 'Empezar un barco');
 
@@ -27,7 +27,27 @@ export function html(ctx, { editar = false } = {}) {
         <button class="btn btn--principal" type="submit">${editar ? 'Guardar cambios' : 'Empezar'}</button>
         ${editar ? '<button class="btn btn--secundario" type="button" data-accion="cancelar">Cancelar</button>' : ''}
       </div>
-    </form>`;
+    </form>
+    ${editar ? '' : anteriores(ctx.datos.anteriores)}`;
+}
+
+function anteriores(lista) {
+  if (!lista.length) return '';
+  return `
+    <section class="anteriores" aria-labelledby="anteriores-titulo">
+      <h2 id="anteriores-titulo">Trabajos anteriores</h2>
+      <ul class="dias">
+        ${lista.map((t) => `
+          <li>
+            <button type="button" class="fila" data-accion="ver" data-id="${escapar(t.id)}">
+              <span class="fila__titulo">${escapar(t.barco)}</span>
+              <span class="fila__total">${viandas(totalTrabajo(t).total)}</span>
+              <span class="fila__dato">Entró el ${fechaCorta(t.entrada)} · ${t.dias.length} ${t.dias.length === 1 ? 'día' : 'días'}</span>
+              <span class="fila__accion">Ver la lista</span>
+            </button>
+          </li>`).join('')}
+      </ul>
+    </section>`;
 }
 
 function marcar(campo, mal) {
@@ -58,4 +78,7 @@ export function montar(raiz, ctx, { editar = false } = {}) {
   });
 
   raiz.querySelector('[data-accion="cancelar"]')?.addEventListener('click', () => ctx.ir('trabajo'));
+  raiz.querySelectorAll('[data-accion="ver"]').forEach((boton) => {
+    boton.addEventListener('click', () => ctx.ir('resumen', { id: boton.dataset.id }));
+  });
 }

@@ -1,6 +1,6 @@
 # Viandas
 
-Web app para anotar, día por día, las viandas que se entregan a la tripulación de un barco: almuerzo y cena, en el apartamento y en el puerto, con la hora de entrega y el menú. Al final arma la lista de todo lo trabajado, con el nombre del barco.
+Web app para anotar, día por día, las viandas que se entregan mientras se trabaja para un barco: almuerzo y cena, en el apartamento y en el puerto, con la hora de entrega y el menú. Al final arma la lista de todo lo trabajado, con el nombre del barco.
 
 | | |
 |---|---|
@@ -14,7 +14,7 @@ Web app para anotar, día por día, las viandas que se entregan a la tripulació
 
 ## Para quién es
 
-La hice para mi mamá, que cocina viandas para una empresa que atiende barcos. Hasta ahora llevaba la cuenta en papel. No se lleva bien con la tecnología, así que la app tenía que poder usarse sin explicación:
+La hice para mi mamá, que cocina viandas para una empresa. Cada trabajo está atado a un barco y no sabe de antemano cuántos días va a durar. No se lleva bien con la tecnología, así que la app tenía que poder usarse sin explicación:
 
 - **Una sola cosa por pantalla:** primero el barco, después los días, al final la lista.
 - **Letra grande y clara:** base de 20 px con Atkinson Hyperlegible, una tipografía hecha para leer fácil.

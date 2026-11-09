@@ -3,8 +3,9 @@
 import { cargar, guardar, pedirGuardadoPersistente } from './datos.js';
 import * as inicio from './vistas/inicio.js';
 import * as trabajo from './vistas/trabajo.js';
+import * as resumen from './vistas/resumen.js';
 
-const vistas = { inicio, trabajo };
+const vistas = { inicio, trabajo, resumen };
 const principal = document.getElementById('principal');
 
 /** Evita pantallas que no tienen sentido con los datos actuales (por ejemplo, al volver atrás). */
@@ -13,7 +14,8 @@ function corregir(nombre, opciones) {
   if (!vistas[nombre]) return corregir('inicio', {});
   if (nombre === 'inicio' && actual && !opciones.editar && vistas.trabajo) return ['trabajo', {}];
   if (nombre === 'inicio' && opciones.editar && !actual) return ['inicio', {}];
-  if (nombre === 'trabajo' && !actual) return ['inicio', {}];
+  if (nombre === 'trabajo' && !actual) return corregir('inicio', {});
+  if (nombre === 'resumen' && !resumen.buscar(ctx, opciones)) return corregir('inicio', {});
   return [nombre, opciones];
 }
 

@@ -54,6 +54,11 @@ function formDia(t, i) {
             ${LUGARES.map(([l, lugar]) => campoLugar(d, c, comida, l, lugar)).join('')}
           </div>
         </fieldset>`).join('')}
+      <div class="campo">
+        <label for="menu">Menú: ¿qué cocinaste?</label>
+        <textarea id="menu" rows="3" data-campo="menu"
+          placeholder="Ej.: almuerzo milanesas con puré, cena guiso de lentejas">${escapar(d.menu)}</textarea>
+      </div>
       <p class="dia__total">Total del día: <strong data-total>${viandas(totalDia(d).total)}</strong></p>
       <p class="dia__guardado" data-guardado>${ICONOS.ok}Se guarda solo, no hace falta apretar nada.</p>
       ${i === t.dias.length - 1 && i > 0 ? `<button type="button" class="btn-texto btn-texto--peligro" data-accion="borrar-dia">Borrar el día ${i + 1}</button>` : ''}
@@ -130,6 +135,8 @@ export function montar(raiz, ctx, { abierto } = {}) {
       dia[campo.dataset.c][campo.dataset.l].cant = Number(limpio) || 0;
     } else if (campo.dataset.campo === 'hora') {
       dia[campo.dataset.c][campo.dataset.l].hora = campo.value;
+    } else if (campo.dataset.campo === 'menu') {
+      dia.menu = campo.value;
     } else {
       return;
     }

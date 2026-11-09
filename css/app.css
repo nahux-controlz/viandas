@@ -300,6 +300,7 @@ input:focus-visible, textarea:focus-visible { outline: 3px solid var(--mar); out
 .contador__btn--mas { grid-area: mas; }
 .contador__btn:active { color: #fff; background: var(--mar); }
 
+.dia > .campo { padding-inline: 0.25rem; }
 .dia__total {
   padding: 0.75rem 1rem;
   font-size: 1.25rem;

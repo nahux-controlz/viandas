@@ -130,7 +130,8 @@ export function montar(raiz, ctx, { abierto } = {}) {
   raiz.addEventListener('input', (e) => {
     const campo = e.target;
     if (campo.dataset.campo === 'cant') {
-      const limpio = campo.value.replace(/\D/g, '').slice(0, 3);
+      // Solo números, hasta 999 y sin ceros adelante ("08" pasa a "8").
+      const limpio = campo.value.replace(/\D/g, '').replace(/^0+(?=\d)/, '').slice(0, 3);
       if (limpio !== campo.value) campo.value = limpio;
       dia[campo.dataset.c][campo.dataset.l].cant = Number(limpio) || 0;
     } else if (campo.dataset.campo === 'hora') {

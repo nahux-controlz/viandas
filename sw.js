@@ -1,7 +1,7 @@
 // Service worker: guarda la app en el teléfono para que abra sin señal.
 // Responde con lo guardado y, si hay conexión, actualiza en segundo plano.
 // Al cambiar archivos de la app, subir VERSION.
-const VERSION = 'viandas-v1';
+const VERSION = 'viandas-v2';
 const ARCHIVOS = [
   './',
   'index.html',

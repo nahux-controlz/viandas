@@ -145,8 +145,13 @@ export function montar(raiz, ctx, { abierto } = {}) {
   });
 
   // Al tocar una cantidad se selecciona el número, así se escribe encima sin borrar.
+  // Solo si sigue enfocada: select() devuelve el foco y podría robárselo a otro campo.
   raiz.addEventListener('focusin', (e) => {
-    if (e.target.dataset.campo === 'cant') setTimeout(() => e.target.select(), 0);
+    const campo = e.target;
+    if (campo.dataset.campo !== 'cant') return;
+    setTimeout(() => {
+      if (document.activeElement === campo) campo.select();
+    }, 0);
   });
   raiz.addEventListener('focusout', (e) => {
     if (e.target.dataset.campo === 'cant' && e.target.value === '') e.target.value = '0';

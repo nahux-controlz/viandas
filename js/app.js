@@ -2,14 +2,15 @@
 // Cada pantalla exporta html(ctx, opciones), titulo(ctx, opciones) y montar(raiz, ctx, opciones).
 import { cargar, guardar, pedirGuardadoPersistente } from './datos.js';
 import * as inicio from './vistas/inicio.js';
+import * as trabajo from './vistas/trabajo.js';
 
-const vistas = { inicio };
+const vistas = { inicio, trabajo };
 const principal = document.getElementById('principal');
 
 /** Evita pantallas que no tienen sentido con los datos actuales (por ejemplo, al volver atrás). */
 function corregir(nombre, opciones) {
   const { actual } = ctx.datos;
-  if (!vistas[nombre]) return ['inicio', {}];
+  if (!vistas[nombre]) return corregir('inicio', {});
   if (nombre === 'inicio' && actual && !opciones.editar && vistas.trabajo) return ['trabajo', {}];
   if (nombre === 'inicio' && opciones.editar && !actual) return ['inicio', {}];
   if (nombre === 'trabajo' && !actual) return ['inicio', {}];

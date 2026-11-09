@@ -24,6 +24,32 @@ export function nuevoTrabajo(barco, entrada) {
   return { id: Date.now().toString(36), barco, entrada, dias: [nuevoDia()] };
 }
 
+/** Suma de un día: por comida, por lugar y total. */
+export function totalDia(dia) {
+  const t = { total: 0 };
+  for (const [c] of COMIDAS) t[c] = 0;
+  for (const [l] of LUGARES) t[l] = 0;
+  for (const [c] of COMIDAS) {
+    for (const [l] of LUGARES) {
+      const n = dia[c][l].cant;
+      t[c] += n;
+      t[l] += n;
+      t[`${c}-${l}`] = n;
+      t.total += n;
+    }
+  }
+  return t;
+}
+
+/** Suma de todos los días de un trabajo, con las mismas claves que totalDia. */
+export function totalTrabajo(trabajo) {
+  const suma = {};
+  for (const dia of trabajo.dias) {
+    for (const [clave, n] of Object.entries(totalDia(dia))) suma[clave] = (suma[clave] ?? 0) + n;
+  }
+  return suma;
+}
+
 /** Completa lo que falte, por si los datos vienen de una versión anterior. */
 function normalizarDia(d = {}) {
   const dia = nuevoDia();
